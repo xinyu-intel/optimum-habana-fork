@@ -120,6 +120,11 @@ def setup_parser(parser):
         help="Whether to use sampling for generation.",
     )
     parser.add_argument(
+        "--size",
+        default=1,
+        type=int,
+    )
+    parser.add_argument(
         "--num_beams",
         default=1,
         type=int,
@@ -574,6 +579,7 @@ def main():
         elif args.batch_size < len(input_sentences):
             input_sentences = input_sentences[: args.batch_size]
 
+        input_sentences = [input_sentences[0] * args.size]
         def generate(size=None, reduce_recompile=False):
             """Generates sequences from the input sentences and returns them."""
             encode_t0 = time.perf_counter()
